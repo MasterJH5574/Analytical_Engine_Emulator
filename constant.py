@@ -1,6 +1,6 @@
 MAX_DIGIT = 8
 MAX_NUMBER = 10**MAX_DIGIT
-MAX_STORE = 15
+MAX_STORE = 10
 
 NOT_INTEGER = "Not integer!"
 INVALID_OPERATION = "Invalid operation!"

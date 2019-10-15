@@ -12,7 +12,7 @@ def execute():
         if ans >= constant.MAX_NUMBER or ans < 0:
             runup = True
             mill[3] = mill[4] = 0
-            mill[0] = mill[1] = mill[2] = -1
+            mill[0] = mill[1] = mill[2] = 0
             return
         mill[4] = ans
         mill[3] = 0
@@ -22,7 +22,7 @@ def execute():
         if ans >= constant.MAX_NUMBER or ans < 0:
             runup = True
             mill[3] = mill[4] = 0
-            mill[0] = mill[1] = mill[2] = -1
+            mill[0] = mill[1] = mill[2] = 0
             return
         mill[4] = ans
         mill[3] = 0
@@ -36,7 +36,7 @@ def execute():
         if mill[2] == 0:
             runup = True
             mill[3] = mill[4] = 0
-            mill[0] = mill[1] = mill[2] = -1
+            mill[0] = mill[1] = mill[2] = 0
             return
         x = mill[0] * constant.MAX_NUMBER + mill[1]
         quotient = x // mill[2]
@@ -44,18 +44,41 @@ def execute():
         if quotient >= constant.MAX_NUMBER:
             runup = True
             mill[3] = mill[4] = 0
-            mill[0] = mill[1] = mill[2] = -1
+            mill[0] = mill[1] = mill[2] = 0
             return
         mill[3] = quotient
         mill[4] = remainder
         runup = False
 
-    mill[0] = mill[1] = mill[2] = -1
+    mill[0] = mill[1] = mill[2] = 0
+
+
+def print_state(step):
+    print("step %d" % step)
+    print(str(op) + ' ' + str(runup))
+    for i in range(4):
+        num = mill[i]
+        out = []
+        for j in range(8):
+            out.append(num % 10)
+            num = num // 10
+        for j in range(7, -1, -1):
+            print(out[j], end=" ")
+        print()
+    for i in range(constant.MAX_STORE):
+        num = store[i]
+        out = []
+        for j in range(8):
+            out.append(num % 10)
+            num = num // 10
+        for j in range(7, -1, -1):
+            print(out[j], end=" ")
+        print()
 
 
 def print_val(val):
-    with open(sys.argv[2], "a") as f_output:
-        f_output.write(str(val) + '\n')
+    # with open(sys.argv[2], "a") as f_output:
+    #     f_output.write(str(val) + '\n')
     print(val)
 
 
@@ -75,28 +98,31 @@ with open(sys.argv[2], "w") as f_output:
 
 # the decimal of each column is 8
 # thus the range of numbers is [0, 100000000)
-# 15 store columns in total, numbered from 0 to 14
+# MAX_STORE store columns in total, numbered from 0 to MAX_STORE-1
 store = []
-for i in range(0, 15):
-    store.append(-1)
+for i in range(0, constant.MAX_STORE):
+    store.append(0)
 
 # mill[0]: I1'  mill[1]: I1  mill[2]: I2
 # mill[3]: E'   mill[4]: E
 mill = []
 for i in range(0, 3):
-    mill.append(-1)
+    mill.append(0)
 mill.append(0)
 mill.append(0)
 
 op = -1
 runup = False
+loaded = False
 
 # ---- finish initialize ----
-
 cur = 0
+step_cnt = 0
 while cur < len(lines):
     line = lines[cur].strip().split(' ')
     cur += 1
+    step_cnt += 1
+    print_state(step_cnt)
 
     if line[0] == 'N':
         res = valid.n_validator(line)
@@ -113,7 +139,7 @@ while cur < len(lines):
             print("Line " + str(cur - 1) + ": " + res)
             break
         op = res
-        mill[0] = mill[1] = mill[2] = -1
+        mill[0] = mill[1] = mill[2] = 0
         mill[3] = mill[4] = 0
         runup = False
 
@@ -125,23 +151,19 @@ while cur < len(lines):
             break
 
         if line[0] == 'L':
-            if store[res] == -1:
-                print("Line " + str(cur - 1) + ": " + constant.STORE_NOT_INITIALIZE)
-                break
             v = store[res]
             if op == -1:
                 print("Line " + str(cur - 1) + ": " + constant.NO_OP)
                 break
-            if mill[1] == -1:
+            if not loaded:
                 mill[1] = v
+                loaded = True
                 runup = False
             else:
                 mill[2] = v
+                loaded = False
                 execute()
         elif line[0] == "L'":
-            if store[res] == -1:
-                print("Line " + str(cur - 1) + ": " + constant.STORE_NOT_INITIALIZE)
-                break
             v = store[res]
             if op != 3:
                 print("Line " + str(cur - 1) + ": " + constant.OP_IS_NOT_DIVIDE)
@@ -159,9 +181,6 @@ while cur < len(lines):
         res = valid.lsp_validator(line)
         if type(res) is str:
             print("Line " + str(cur - 1) + ": " + res)
-            break
-        if store[res] == -1:
-            print("Line " + str(cur - 1) + ": " + constant.STORE_NOT_INITIALIZE)
             break
         print_val(store[res])
         runup = False

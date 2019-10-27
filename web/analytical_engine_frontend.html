@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<!-- 引入 Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!-- 引入 jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<title>Analytical Engine</title>
+</head>
+
+<body>
+<center>
+  <div style="background: #ccffff; border: 1.5px solid #000000; width:1000px">
+    
+    <br/><br/>
+    <div style="display:inline-block;">
+      <canvas id="myCanvas" width="700" height="496" style="border:2px solid #c3c3c3;">
+        您的浏览器竟然不支持Canvas？换个浏览器吧！
+      </canvas>
+    </div>
+
+   
+    <div align="left" style="overflow:auto; background: #ffffff; border:2px solid #c3c3c3;
+        font-family: arial, helvetica, sans-serif; font-style: normal; font-weight: bold; font-size: 25px;
+        width: 230px; height: 500px; display:inline-block; margin-left:10px;" id="text"> 
+        Output:<br>
+    </div>
+
+    <br/><br/>
+  </div>
+</center>
+<br>
+
+<center>
+  <div class="btn-group" >
+    <button type="button" class="btn btn-secondary" onclick="jumpto();"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-secondary" onclick="stopit();"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button>
+    <button type="button" id='play' class="btn btn-secondary" onclick="playit();"><span id='icon' class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-secondary" onclick="nextstep();"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+  </div>
+</center>
+
+<script type="text/javascript" src="javascript/data.js"></script>
+<script type="text/javascript" src="javascript/draw.js"></script>
+<script type="text/javascript" src="javascript/button.js"></script>
+<script type="text/javascript" src="javascript/main.js"></script>
+
+
+</body>
+</html>

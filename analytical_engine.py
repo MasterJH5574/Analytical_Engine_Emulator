@@ -7,79 +7,125 @@ import validator as valid
 
 def execute():
     global runup
+    global modify_stack
     if op == 0:
         ans = mill[1] + mill[2]
         if ans >= constant.MAX_NUMBER or ans < 0:
             runup = True
-            mill[3] = mill[4] = 0
-            mill[0] = mill[1] = mill[2] = 0
+            for i in range(0, 5):
+                if mill[i] != 0:
+                    mill[i] = 0
+                    modify_stack.append((i, 0))
             return
         mill[4] = ans
         mill[3] = 0
+        modify_stack.append((3, mill[3]))
+        modify_stack.append((4, mill[4]))
         runup = False
     elif op == 1:
         ans = mill[1] - mill[2]
         if ans >= constant.MAX_NUMBER or ans < 0:
             runup = True
-            mill[3] = mill[4] = 0
-            mill[0] = mill[1] = mill[2] = 0
+            for i in range(0, 5):
+                if mill[i] != 0:
+                    mill[i] = 0
+                    modify_stack.append((i, 0))
             return
         mill[4] = ans
         mill[3] = 0
+        modify_stack.append((3, mill[3]))
+        modify_stack.append((4, mill[4]))
         runup = False
     elif op == 2:
         ans = mill[1] * mill[2]
         mill[3] = ans // constant.MAX_NUMBER
         mill[4] = ans % constant.MAX_NUMBER
+        modify_stack.append((3, mill[3]))
+        modify_stack.append((4, mill[4]))
         runup = False
     else:
         if mill[2] == 0:
             runup = True
-            mill[3] = mill[4] = 0
-            mill[0] = mill[1] = mill[2] = 0
+            for i in range(0, 5):
+                if mill[i] != 0:
+                    mill[i] = 0
+                    modify_stack.append((i, 0))
             return
         x = mill[0] * constant.MAX_NUMBER + mill[1]
         quotient = x // mill[2]
         remainder = x % mill[2]
         if quotient >= constant.MAX_NUMBER:
             runup = True
-            mill[3] = mill[4] = 0
-            mill[0] = mill[1] = mill[2] = 0
+            for i in range(0, 5):
+                if mill[i] != 0:
+                    mill[i] = 0
+                    modify_stack.append((i, 0))
             return
         mill[3] = quotient
         mill[4] = remainder
+        modify_stack.append((3, mill[3]))
+        modify_stack.append((4, mill[4]))
         runup = False
 
-    mill[0] = mill[1] = mill[2] = 0
+    for i in range(0, 3):
+        if mill[i] != 0:
+            mill[i] = 0
+            modify_stack.append((i, 0))
+
+
+def num_to_op(num):
+    numbers = {
+        -1: '~',
+        0: '+',
+        1: '-',
+        2: '*',
+        3: '/'
+    }
+    return numbers.get(num, None)
+
+
+def bool_to_runup(val):
+    booleans = {
+        False: '0',
+        True: '1'
+    }
+    return booleans.get(val, None)
 
 
 def print_state(step):
-    print("step %d" % step)
-    print(str(op) + ' ' + str(runup))
-    for i in range(4):
-        num = mill[i]
-        out = []
-        for j in range(8):
-            out.append(num % 10)
-            num = num // 10
-        for j in range(7, -1, -1):
-            print(out[j], end=" ")
-        print()
-    for i in range(constant.MAX_STORE):
-        num = store[i]
-        out = []
-        for j in range(8):
-            out.append(num % 10)
-            num = num // 10
-        for j in range(7, -1, -1):
-            print(out[j], end=" ")
-        print()
+    global print_num
+    global modify_stack
+    print("Step %d" % step)
+    print(str(num_to_op(op)) + ' ' + str(bool_to_runup(runup)))
+    print(len(modify_stack))
+    for pair in modify_stack:
+        # idx: 0~4 for mill, 5~14 for store
+        idx = pair[0]
+        if idx < 5:
+            num = mill[idx]
+        else:
+            num = store[idx - 5]
+        # print(idx, end=" ")
+        # out = []
+        # for j in range(0, constant.MAX_DIGIT):
+        #     out.append(num % 10)
+        #     num = num // 10
+        # for j in range(constant.MAX_DIGIT - 1, -1, -1):
+        #     print(out[j], end=" ")
+        print(str(idx) + " " + str(num))
+
+    print("%d" % print_num)
+
+    print_num = -1
+    modify_stack = []
 
 
 def print_val(val):
     # with open(sys.argv[2], "a") as f_output:
     #     f_output.write(str(val) + '\n')
-    print(val)
+    # print(val)
+    global print_num
+    print_num = val
 
 
 # main
@@ -92,8 +138,9 @@ with open(sys.argv[1], "r") as f_source:
             i -= 1
         i += 1
 
-with open(sys.argv[2], "w") as f_output:
-    pass
+# with open(sys.argv[2], "w") as f_output:
+#     pass
+
 # ---- initialize ----
 
 # the decimal of each column is 8
@@ -115,14 +162,16 @@ op = -1
 runup = False
 loaded = False
 
+print_num = -1
+modify_stack = []
 # ---- finish initialize ----
+
 cur = 0
 step_cnt = 0
 while cur < len(lines):
     line = lines[cur].strip().split(' ')
     cur += 1
     step_cnt += 1
-    print_state(step_cnt)
 
     if line[0] == 'N':
         res = valid.n_validator(line)
@@ -130,6 +179,7 @@ while cur < len(lines):
             print("Line " + str(cur - 1) + ": " + res)
             break
         store[res[0]] = res[1]
+        modify_stack.append((res[0] + 5, res[1]))
         runup = False
 
     elif line[0] == '+' or line[0] == '-' \
@@ -139,8 +189,10 @@ while cur < len(lines):
             print("Line " + str(cur - 1) + ": " + res)
             break
         op = res
-        mill[0] = mill[1] = mill[2] = 0
-        mill[3] = mill[4] = 0
+        for i in range(0, 5):
+            if mill[i] != 0:
+                mill[i] = 0
+                modify_stack.append((i, 0))
         runup = False
 
     elif line[0] == 'L' or line[0] == 'S' \
@@ -157,11 +209,14 @@ while cur < len(lines):
                 break
             if not loaded:
                 mill[1] = v
+                modify_stack.append((1, v))
                 loaded = True
                 runup = False
             else:
                 mill[2] = v
+                modify_stack.append((2, v))
                 loaded = False
+                print_state(step_cnt)
                 execute()
         elif line[0] == "L'":
             v = store[res]
@@ -169,12 +224,15 @@ while cur < len(lines):
                 print("Line " + str(cur - 1) + ": " + constant.OP_IS_NOT_DIVIDE)
                 break
             mill[0] = v
+            modify_stack.append((0, v))
             runup = False
         elif line[0] == 'S':
             store[res] = mill[4]
+            modify_stack.append((res + 5, mill[4]))
             runup = False
         else:
             store[res] = mill[3]
+            modify_stack.append((res + 5, mill[3]))
             runup = False
 
     elif line[0] == 'P':
@@ -204,3 +262,5 @@ while cur < len(lines):
 
     else:
         print("Line " + str(cur - 1) + ": " + constant.INVALID_OPERATION)
+
+    print_state(step_cnt)

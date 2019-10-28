@@ -95,9 +95,9 @@ def bool_to_runup(val):
 def print_state(step):
     global print_num
     global modify_stack
-    print("Step %d" % step)
-    print(str(num_to_op(op)) + ' ' + str(bool_to_runup(runup)))
-    print(len(modify_stack))
+    print("Step %d\\n\\" % step)
+    print(str(num_to_op(op)) + ' ' + str(bool_to_runup(runup)) + "\\n\\")
+    print(str(len(modify_stack)) + "\\n\\")
     for pair in modify_stack:
         # idx: 0~4 for mill, 5~14 for store
         idx = pair[0]
@@ -112,9 +112,9 @@ def print_state(step):
         #     num = num // 10
         # for j in range(constant.MAX_DIGIT - 1, -1, -1):
         #     print(out[j], end=" ")
-        print(str(idx) + " " + str(num))
+        print(str(idx) + " " + str(num) + "\\n\\")
 
-    print("%d" % print_num)
+    print("%d\\n\\" % print_num)
 
     print_num = -1
     modify_stack = []
@@ -216,6 +216,7 @@ while cur < len(lines):
                 mill[2] = v
                 modify_stack.append((2, v))
                 loaded = False
+                step_cnt += 1
                 print_state(step_cnt)
                 execute()
         elif line[0] == "L'":

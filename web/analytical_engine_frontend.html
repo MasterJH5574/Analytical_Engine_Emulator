@@ -11,20 +11,19 @@
 
 <body>
 <center>
-  <div style="background: transparent; border: 1.5px solid transparent; width:1000px">
+  <div style="background: #1a1a1a; border: 1.5px solid transparent; width:1000px; border-radius:10px;">
     
     <br/><br/>
     <div style="display:inline-block;">
-      <canvas id="myCanvas" width="700" height="496" style="border:2px solid #c3c3c3;">
+      <canvas id="myCanvas" width="700" height="496" style="border:2px solid #c3c3c3; border-radius:10px;">
         您的浏览器竟然不支持Canvas？换个浏览器吧！
       </canvas>
     </div>
-
    
-    <div align="left" style="overflow:auto; background: #ffffff; border:2px solid #c3c3c3; color:#000000;
+    <div align="left" style="overflow:auto; background: #fafafa; border:2px solid #3b3b3b; color:#000000;
         font-family: arial, helvetica, sans-serif; font-style: normal; font-weight: bold; font-size: 25px;
-        width: 230px; height: 500px; display:inline-block; margin-left:10px;" id="text"> 
-        Output:<br>
+        border-radius:10px; width: 230px; height: 500px; display:inline-block; margin-left:35px;" id="text"> 
+        &nbspOutput:<br>
     </div>
 
     <br/><br/>
@@ -33,11 +32,11 @@
 <br>
 
 <center>
-  <div class="btn-group" >
-    <button type="button" class="btn btn-secondary" onclick="jumpto();"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
-    <button type="button" class="btn btn-secondary" onclick="stopit();"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button>
+  <div class="btn-group" style="color: black">
+    <button type="button" id='prev' class="btn btn-secondary" onclick="prevstep();"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
     <button type="button" id='play' class="btn btn-secondary" onclick="playit();"><span id='icon' class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
-    <button type="button" class="btn btn-secondary" onclick="nextstep();"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+    <button type="button" id='stop' class="btn btn-secondary" onclick="stopit();"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></button>
+    <button type="button" id='next' class="btn btn-secondary" onclick="nextstep();"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
   </div>
 </center>
 

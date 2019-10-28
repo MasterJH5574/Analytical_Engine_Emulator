@@ -5,7 +5,7 @@ function playit() {
     //output_added += "AUTO PLAY!<br>"
     if (!isExecuting) {
         isExecuting = true;
-        excecute(1000);
+        excecute(100000);
     }
     //draw_text(width * 2 / 5, 25, "autoplay_mood");
 }

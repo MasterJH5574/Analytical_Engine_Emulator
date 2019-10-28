@@ -13,7 +13,7 @@ function excecute(i) {
         draw_canvas();
         draw_store_with_judgements();
         draw_mill_with_judgements();
-        setTimeout(function(a){ excecute(a); }, 120, i - 1);
+        setTimeout(function(a){ excecute(a); }, 1200, i - 1);
     }
     else {
         isExecuting = false;

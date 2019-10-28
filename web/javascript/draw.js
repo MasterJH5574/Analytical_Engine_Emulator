@@ -121,7 +121,7 @@ function draw_store_with_judgements() {
             data.change.regs[i + 5] ? "#FF0000" : "#000000");
         }
     }
-    setTimeout(function(){ draw_store(false); }, 35);
+    setTimeout(function(){ draw_store(false); }, 350);
 }
 
 function draw_mill(words = true) {
@@ -203,6 +203,6 @@ function draw_mill_with_judgements() {
     draw_text((l_start + blank_rate_reg * 5 * per_pixw + l_start + 1.55 * per_pixw) / 2, y1_reg * 0.625 + y2_reg * 0.375, data.runup, "30px Consolas", 
     data.change.runup ? "#FF0000" : "#000000");
 
-    setTimeout(function(){ draw_mill(false); }, 35);
+    setTimeout(function(){ draw_mill(false); }, 350);
 
 }

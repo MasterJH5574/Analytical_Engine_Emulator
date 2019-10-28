@@ -263,5 +263,6 @@ while cur < len(lines):
 
     else:
         print("Line " + str(cur - 1) + ": " + constant.INVALID_OPERATION)
+        break
 
     print_state(step_cnt)

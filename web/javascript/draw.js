@@ -1,6 +1,7 @@
 function draw_rect(x1, y1, x2, y2) {
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
+    ctx.beginPath();
     ctx.rect(x1, y1, x2 - x1, y2 - y1);
     ctx.stroke();
 }
@@ -8,6 +9,7 @@ function draw_rect(x1, y1, x2, y2) {
 function draw_filled_rect(x1, y1, x2, y2, color){
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
+    ctx.beginPath();
     ctx.fillStyle = color;
     ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
 }
@@ -15,6 +17,7 @@ function draw_filled_rect(x1, y1, x2, y2, color){
 function draw_line(x1, y1, x2, y2, color) {
     var c=document.getElementById("myCanvas");
     var ctx=c.getContext("2d");
+    ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();

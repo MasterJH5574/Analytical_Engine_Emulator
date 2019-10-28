@@ -216,8 +216,8 @@ while cur < len(lines):
                 mill[2] = v
                 modify_stack.append((2, v))
                 loaded = False
-                step_cnt += 1
                 print_state(step_cnt)
+                step_cnt += 1
                 execute()
         elif line[0] == "L'":
             v = store[res]

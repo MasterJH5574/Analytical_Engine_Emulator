@@ -61,10 +61,13 @@ const per_pixw = width / num_w;
 const blank_rate_reg = 0.075;
 const umargin_rate = 0.13;
 const dmargin_rate = 0.06;
+const color_board = "#cfcfcf";
+const color_mill = "#e5faff";
+const color_store = color_mill;
   
   
 function draw_canvas() {
-    draw_filled_rect(0, 0, width, height, "#e5f9ff");
+    draw_filled_rect(0, 0, width, height, color_board);
 }
   
   
@@ -79,7 +82,7 @@ function draw_store(words = true) {
     var wi = l_end - l_start;
 
     if (words) draw_text((l_start + l_end) / 2, umargin_rate * height * 0.8, "store", font="28px Consolas");
-    draw_filled_rect(l_start - per_pixw * blank_rate_reg * 2, umargin_rate * height, l_end + blank_rate_reg * per_pixw * 2, (1 - dmargin_rate) * height, "#e6e6e6");
+    draw_filled_rect(l_start - per_pixw * blank_rate_reg * 2, umargin_rate * height, l_end + blank_rate_reg * per_pixw * 2, (1 - dmargin_rate) * height, color_store);
     draw_rect(l_start - per_pixw * blank_rate_reg * 2, height * umargin_rate, l_end + blank_rate_reg * per_pixw * 2, height * (1 - dmargin_rate));
 
     var y1_reg = hi * umargin_rate_store + height * umargin_rate;
@@ -105,7 +108,7 @@ function draw_store_with_judgements() {
     var wi = l_end - l_start;
 
     draw_text((l_start + l_end) / 2, umargin_rate * height * 0.8, "store", font="28px Consolas");
-    draw_filled_rect(l_start - per_pixw * blank_rate_reg * 2, umargin_rate * height, l_end + blank_rate_reg * per_pixw * 2, (1 - dmargin_rate) * height, "#e6e6e6");
+    draw_filled_rect(l_start - per_pixw * blank_rate_reg * 2, umargin_rate * height, l_end + blank_rate_reg * per_pixw * 2, (1 - dmargin_rate) * height, color_store);
     draw_rect(l_start - per_pixw * blank_rate_reg * 2, height * umargin_rate, l_end + blank_rate_reg * per_pixw * 2, height * (1 - dmargin_rate));
 
     var y1_reg = hi * umargin_rate_store + height * umargin_rate;
@@ -121,7 +124,7 @@ function draw_store_with_judgements() {
             data.change.regs[i + 5] ? "#FF0000" : "#000000");
         }
     }
-    setTimeout(function(){ draw_store(false); }, 350);
+    setTimeout(function(){ draw_store(false); }, interval_red);
 }
 
 function draw_mill(words = true) {
@@ -133,7 +136,7 @@ function draw_mill(words = true) {
     var wi = l_end - l_start;
 
     if (words) draw_text((l_start + l_end) / 2, umargin_rate * height * 0.8, "mill", font="28px Consolas");
-    draw_filled_rect(l_start - per_pixw * blank_rate_reg * 2, umargin_rate * height, l_end + blank_rate_reg * per_pixw * 2, (1 - dmargin_rate) * height, "#e6e6e6");
+    draw_filled_rect(l_start - per_pixw * blank_rate_reg * 2, umargin_rate * height, l_end + blank_rate_reg * per_pixw * 2, (1 - dmargin_rate) * height, color_mill);
     draw_rect(l_start - per_pixw * blank_rate_reg * 2, height * umargin_rate, l_end + blank_rate_reg * per_pixw * 2, height * (1 - dmargin_rate));
 
     var y1_reg = hi * umargin_rate_store + height * umargin_rate;
@@ -172,7 +175,7 @@ function draw_mill_with_judgements() {
     var wi = l_end - l_start;
 
     draw_text((l_start + l_end) / 2, umargin_rate * height * 0.8, "mill", font="28px Consolas");
-    draw_filled_rect(l_start - per_pixw * blank_rate_reg * 2, umargin_rate * height, l_end + blank_rate_reg * per_pixw * 2, (1 - dmargin_rate) * height, "#e6e6e6");
+    draw_filled_rect(l_start - per_pixw * blank_rate_reg * 2, umargin_rate * height, l_end + blank_rate_reg * per_pixw * 2, (1 - dmargin_rate) * height, color_mill);
     draw_rect(l_start - per_pixw * blank_rate_reg * 2, height * umargin_rate, l_end + blank_rate_reg * per_pixw * 2, height * (1 - dmargin_rate));
 
     var y1_reg = hi * umargin_rate_store + height * umargin_rate;
@@ -203,6 +206,6 @@ function draw_mill_with_judgements() {
     draw_text((l_start + blank_rate_reg * 5 * per_pixw + l_start + 1.55 * per_pixw) / 2, y1_reg * 0.625 + y2_reg * 0.375, data.runup, "30px Consolas", 
     data.change.runup ? "#FF0000" : "#000000");
 
-    setTimeout(function(){ draw_mill(false); }, 350);
+    setTimeout(function(){ draw_mill(false); }, interval_red);
 
 }

@@ -92,12 +92,19 @@ def bool_to_runup(val):
     return booleans.get(val, None)
 
 
-def print_state(step):
+def print_code():
+    global lines
+    for i in range(0, len(lines)):
+        print("#" + str(i + 1) + ": " + lines[i].strip() + "@")
+        # print(lines[i].strip())
+
+
+def print_state(cur_line, step):
     global print_num
     global modify_stack
     print("Step %d" % step)
     print(str(num_to_op(op)) + ' ' + str(bool_to_runup(runup)))
-    print(str(len(modify_stack)))
+    print(str(cur_line) + ' ' + str(len(modify_stack)))
     for pair in modify_stack:
         # idx: 0~4 for mill, 5~14 for store
         idx = pair[0]
@@ -166,6 +173,7 @@ print_num = -1
 modify_stack = []
 # ---- finish initialize ----
 
+print_code()
 cur = 0
 step_cnt = 0
 while cur < len(lines):
@@ -216,7 +224,7 @@ while cur < len(lines):
                 mill[2] = v
                 modify_stack.append((2, v))
                 loaded = False
-                print_state(step_cnt)
+                print_state(cur, step_cnt)
                 step_cnt += 1
                 execute()
         elif line[0] == "L'":
@@ -265,4 +273,4 @@ while cur < len(lines):
         print("Line " + str(cur - 1) + ": " + constant.INVALID_OPERATION)
         break
 
-    print_state(step_cnt)
+    print_state(cur, step_cnt)

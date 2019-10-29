@@ -140,6 +140,12 @@ with open(sys.argv[1], "r") as f_source:
     lines = f_source.readlines()
     i = 0
     while i < len(lines):
+        raw_line = lines[i]
+        for j in range(0, len(raw_line)):
+            if raw_line[j] == '#':
+                raw_line = raw_line[:j]
+                break
+        lines[i] = raw_line
         if lines[i].strip() == "":
             del lines[i]
             i -= 1

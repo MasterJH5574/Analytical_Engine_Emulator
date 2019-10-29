@@ -25,6 +25,7 @@ function excecute(i) {
 
 readin();
 get_data();
+get_output();
 draw_canvas();
 draw_store();
 draw_mill();

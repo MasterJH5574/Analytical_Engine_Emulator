@@ -1,6 +1,4 @@
-import os
 import sys
-import json
 import constant
 import validator as valid
 
@@ -112,13 +110,6 @@ def print_state(cur_line, step):
             num = mill[idx]
         else:
             num = store[idx - 5]
-        # print(idx, end=" ")
-        # out = []
-        # for j in range(0, constant.MAX_DIGIT):
-        #     out.append(num % 10)
-        #     num = num // 10
-        # for j in range(constant.MAX_DIGIT - 1, -1, -1):
-        #     print(out[j], end=" ")
         print(str(idx) + " " + str(num))
 
     print("%d" % print_num)
@@ -151,9 +142,6 @@ with open(sys.argv[1], "r") as f_source:
             i -= 1
         i += 1
 
-# with open(sys.argv[2], "w") as f_output:
-#     pass
-
 # ---- initialize ----
 
 # the decimal of each column is 8
@@ -166,10 +154,8 @@ for i in range(0, constant.MAX_STORE):
 # mill[0]: I1'  mill[1]: I1  mill[2]: I2
 # mill[3]: E'   mill[4]: E
 mill = []
-for i in range(0, 3):
+for i in range(0, 5):
     mill.append(0)
-mill.append(0)
-mill.append(0)
 
 op = -1
 runup = False

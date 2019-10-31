@@ -190,7 +190,7 @@ while cur < len(lines):
     if line[0] == 'N':
         res = valid.n_validator(line)
         if type(res) is str:
-            print("Line " + str(cur - 1) + ": " + res)
+            print("Line " + str(cur) + ": " + res)
             break
         store[res[0]] = res[1]
         modify_stack.append((res[0] + 5, res[1]))
@@ -200,7 +200,7 @@ while cur < len(lines):
             or line[0] == '*' or line[0] == '/':
         res = valid.four_validator(line)
         if type(res) is str:
-            print("Line " + str(cur - 1) + ": " + res)
+            print("Line " + str(cur) + ": " + res)
             break
         op = res
         for i in range(0, 5):
@@ -213,13 +213,13 @@ while cur < len(lines):
             or line[0] == "L'" or line[0] == "S'":
         res = valid.lsp_validator(line)
         if type(res) is str:
-            print("Line " + str(cur - 1) + ": " + res)
+            print("Line " + str(cur) + ": " + res)
             break
 
         if line[0] == 'L':
             v = store[res]
             if op == -1:
-                print("Line " + str(cur - 1) + ": " + constant.NO_OP)
+                print("Line " + str(cur) + ": " + constant.NO_OP)
                 break
             if not loaded:
                 mill[1] = v
@@ -236,7 +236,7 @@ while cur < len(lines):
         elif line[0] == "L'":
             v = store[res]
             if op != 3:
-                print("Line " + str(cur - 1) + ": " + constant.OP_IS_NOT_DIVIDE)
+                print("Line " + str(cur) + ": " + constant.OP_IS_NOT_DIVIDE)
                 break
             mill[0] = v
             modify_stack.append((0, v))
@@ -253,7 +253,7 @@ while cur < len(lines):
     elif line[0] == 'P':
         res = valid.lsp_validator(line)
         if type(res) is str:
-            print("Line " + str(cur - 1) + ": " + res)
+            print("Line " + str(cur) + ": " + res)
             break
         print_val(store[res])
         runup = False
@@ -261,7 +261,7 @@ while cur < len(lines):
     elif line[0] == 'B' or line[0] == 'F':
         res = valid.fb_validator(line, cur)
         if type(res) is str:
-            print("Line " + str(cur - 1) + ": " + res)
+            print("Line " + str(cur) + ": " + res)
             break
         cur = res
         runup = False
@@ -269,14 +269,14 @@ while cur < len(lines):
     elif line[0] == '?B' or line[0] == '?F':
         res = valid.fb_validator(line, cur)
         if type(res) is str:
-            print("Line " + str(cur - 1) + ": " + res)
+            print("Line " + str(cur) + ": " + res)
             break
         if runup:
             cur = res
         runup = False
 
     else:
-        print("Line " + str(cur - 1) + ": " + constant.INVALID_OPERATION)
+        print("Line " + str(cur) + ": " + constant.INVALID_OPERATION)
         break
 
     print_state(cur, step_cnt)

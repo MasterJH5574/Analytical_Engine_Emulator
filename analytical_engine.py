@@ -181,6 +181,7 @@ while cur < len(lines):
         store[res[0]] = res[1]
         modify_stack.append((res[0] + 5, res[1]))
         runup = False
+        print_state(cur, step_cnt)
 
     elif line[0] == '+' or line[0] == '-' \
             or line[0] == '*' or line[0] == '/':
@@ -194,6 +195,7 @@ while cur < len(lines):
                 mill[i] = 0
                 modify_stack.append((i, 0))
         runup = False
+        print_state(cur, step_cnt)
 
     elif line[0] == 'L' or line[0] == 'S' \
             or line[0] == "L'" or line[0] == "S'":
@@ -235,6 +237,7 @@ while cur < len(lines):
             store[res] = mill[3]
             modify_stack.append((res + 5, mill[3]))
             runup = False
+        print_state(cur, step_cnt)
 
     elif line[0] == 'P':
         res = valid.lsp_validator(line)
@@ -243,12 +246,15 @@ while cur < len(lines):
             break
         print_val(store[res])
         runup = False
+        print_state(cur, step_cnt)
 
     elif line[0] == 'B' or line[0] == 'F':
         res = valid.fb_validator(line, cur)
         if type(res) is str:
             print("Line " + str(cur) + ": " + res)
             break
+
+        print_state(cur, step_cnt)
         cur = res
         runup = False
 
@@ -257,6 +263,8 @@ while cur < len(lines):
         if type(res) is str:
             print("Line " + str(cur) + ": " + res)
             break
+
+        print_state(cur, step_cnt)
         if runup:
             cur = res
         runup = False
@@ -265,4 +273,3 @@ while cur < len(lines):
         print("Line " + str(cur) + ": " + constant.INVALID_OPERATION)
         break
 
-    print_state(cur, step_cnt)

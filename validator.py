@@ -51,7 +51,7 @@ def fb_validator(line, cur):
         n = int(line[1])
     except ValueError:
         return const.NOT_INTEGER
-    if line[0] == '?F':
+    if line[0] == '?F' or line[0] == 'F':
         cur += n
     else:
         cur -= n

@@ -174,6 +174,7 @@ while cur < len(lines):
     step_cnt += 1
     if step_cnt >= 1e7:
         print("Line " + str(cur) + ": More than 10^7 steps, the program is interrupted.")
+        break
 
     if line[0] == 'N':
         res = valid.n_validator(line)

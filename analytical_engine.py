@@ -172,8 +172,8 @@ while cur < len(lines):
     line = lines[cur].strip().split(' ')
     cur += 1
     step_cnt += 1
-    if step_cnt >= 1e7:
-        print("Line " + str(cur) + ": More than 10^7 steps, the program is interrupted.")
+    if step_cnt >= 2e5:
+        print("Line " + str(cur) + ": More than 2*10^5 steps, the program is interrupted.")
         break
 
     if line[0] == 'N':
